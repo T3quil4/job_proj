@@ -7,5 +7,7 @@ def wrdlist(path):
 
 wordlist = wrdlist('part_two\words.txt')
 
-for word in wordlist:
-    print(word)
+def keyfind(enmsg1, enmsg2, start):
+    keylist=[]
+
+    
