@@ -2,7 +2,7 @@
 
 def encrypt(msg, key):
     encrypted = ""
-    key_len = len(key)
+    keylen = len(key)
 
     for i, char in enumerate(msg):
 
@@ -11,10 +11,10 @@ def encrypt(msg, key):
         else:
             mcode = ord(char) - ord('a')
 
-        if key[i%key_len] == " ":
+        if key[i%keylen] == " ":
             kcode = 26
         else:
-            kcode = ord(key[i%key_len]) - ord('a')
+            kcode = ord(key[i%keylen]) - ord('a')
 
         coded = (mcode+kcode)%27
 
