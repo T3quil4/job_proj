@@ -27,6 +27,7 @@ def decrypt(enmsg, key):
 
     return msg
 
+
 enmsg = "hfnosauzun"
 key = "abcdefgijkl"
 
