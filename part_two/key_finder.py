@@ -5,7 +5,7 @@ def wrdlist(path):
         wlist = [line.strip() for line in file]
     return wlist
 
-wordlist = wrdlist("words.txt")
+wordlist = wrdlist('part_two\words.txt')
 
-for i in wordlist:
-    print(i)
+for word in wordlist:
+    print(word)
