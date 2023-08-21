@@ -1,4 +1,4 @@
-#KEY_FINDER
+#KEYFIND
 
 def wrdlist(path):
     with open(path, 'r') as file:
@@ -11,3 +11,14 @@ def keyfind(enmsg1, enmsg2, start):
     keylist=[]
 
     
+
+    return keylist
+
+emsg1 = "cvtlsxoagjvimnhhezpnjnau"
+emsg2 = "ebtobehq nkcbvfljyhbrp xquq"
+word1 = "early"
+
+keys = keyfind(emsg1, emsg2, word1)
+
+for key in keys:
+    print(key)
