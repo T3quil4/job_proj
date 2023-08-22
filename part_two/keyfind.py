@@ -5,45 +5,77 @@ def wrdlist(path):
         wlist = [line.strip() for line in file]
     return wlist
 
-def keyfind(enmsg1, enmsg2, start):
-    keylist=[]
-    wordlist = wrdlist('part_two\words.txt')
+def decrypt(enmsg, key):
+    msg = ""
+    keylen = len(key)
 
+    for i, char in enumerate(enmsg):
+
+        if i<keylen:
+            if char == " ":
+                ecode = 26
+            else:
+                ecode = ord(char) - ord('a')
+
+            if key[i%keylen] == " ":
+                kcode = 26
+            else:
+                kcode = ord(key[i%keylen]) - ord('a')
+
+            dcode = (ecode-kcode)%27
+
+            if dcode == 26:
+                msgchar = " "
+            else:
+                msgchar = chr(dcode+ord('a'))
+
+            msg += msgchar
+
+    return msg
+
+def keyre(msg, frag):
     result = ""
-    for i, char in enumerate(start):
+
+    for i, char in enumerate(frag):
         if char == " ":
             startcode = 26
         else:
             startcode = ord(char) - ord('a')
         
-        if i < len(enmsg1):
-            if enmsg1[i] == " ":
+        if i < len(msg):
+            if msg[i] == " ":
                 other_code = 26
             else:
-                other_code = ord(enmsg1[i]) - ord('a')
+                other_code = ord(msg[i]) - ord('a')
             
-            diff = (startcode - other_code) % 27
+            diff = (other_code - startcode) % 27
             if diff == 26:
                 result += " "
             else:
                 result += chr(diff + ord('a'))
 
-            #karakterkód és keykód közti elcsúszás a key character kódja
+    return result
 
-    print(result)
+def keyfind(enmsg1, enmsg2, start):
+    keylist=[]
+    wordlist = wrdlist('part_two\words.txt')
+    begin = start
+
+    result = keyre(enmsg1, begin)
+
+    fragment = decrypt(enmsg2, result)
+
+    print(fragment)
+
+    matchlist = []
+    for word in wordlist:
+        if fragment in word:
+            matchlist.append(word)
+
+    print(matchlist)
 
 
         
-
-
-
-
-
-
-
-
-
-
 
 
     return keylist
