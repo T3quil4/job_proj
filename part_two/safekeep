@@ -1,0 +1,185 @@
+def keyfind(enmsg1, enmsg2, list):
+    keylist=[]
+    wordlist = wrdlist('part_two\words.txt')
+
+
+    for wrd1 in list:
+
+        
+
+        result = keyfrag(enmsg1, wrd1)
+        fragment = decrypt(enmsg2, result)
+        print(fragment)
+
+        matchlist = []
+        for word in wordlist:
+            if word.startswith(fragment):
+                matchlist.append(word)
+
+        print(matchlist)
+
+        for wrd2 in matchlist:
+
+            #fragfind
+            result = keyfrag(enmsg2, wrd2)
+            print(result)
+            fragment = decrypt(enmsg1, result)
+            print(fragment)
+
+            #fragcut
+            index = fragment.rfind(" ")
+            if index != -1:
+                frag = fragment[index + 1:]
+            else:
+                frag = fragment
+
+            #fragtowords
+            matchlist = []
+            for word in wordlist:
+                if word.startswith(frag):
+                    matchlist.append(word)
+                    continue
+
+            print(matchlist)
+
+            for wrd in matchlist:
+                
+                ext=wrd+" "
+                newfrag1 = wrd1+" "+ext
+                print(newfrag1)
+
+                result = keyfrag(enmsg1, newfrag1)
+                fragment = decrypt(enmsg2, result)
+                print(fragment)
+                
+                #fragcut
+                index = fragment.rfind(" ")
+                if index != -1:
+                    frag = fragment[index + 1:]
+                else:
+                    frag = fragment
+                #fragtowords
+                matchlist = []
+                for word in wordlist:
+                    if word.startswith(frag):
+                        matchlist.append(word)
+                        continue
+
+                if not matchlist:
+                    newfrag1 = str(newfrag1).replace(ext,"")
+
+                print(matchlist)
+
+                for wrd in matchlist:
+
+                    ext=wrd+" "
+                    newfrag2 = wrd2+" "+ext
+                    print(newfrag2)
+
+                    result = keyfrag(enmsg2, newfrag2)
+                    fragment = decrypt(enmsg1, result)
+                    print(fragment)
+                    
+                    #fragcut
+                    index = fragment.rfind(" ")
+                    if index != -1:
+                        frag = fragment[index + 1:]
+                    else:
+                        frag = fragment
+                    #fragtowords
+                    matchlist = []
+                    for word in wordlist:
+                        if word.startswith(frag):
+                            matchlist.append(word)
+                            continue
+
+                    if not matchlist:
+                        newfrag2 = str(newfrag2).replace(ext,"")
+
+                    print(matchlist)
+                    
+                    for wrd in matchlist:
+
+                        ext=wrd+" "
+                        newfrag1 += ext
+                        print(newfrag1)
+
+                        result = keyfrag(enmsg1, newfrag1)
+                        fragment = decrypt(enmsg2, result)
+                        print(fragment)
+                        
+                        #fragcut
+                        index = fragment.rfind(" ")
+                        if index != -1:
+                            frag = fragment[index + 1:]
+                        else:
+                            frag = fragment
+                        #fragtowords
+                        matchlist = []
+                        for word in wordlist:
+                            if word.startswith(frag):
+                                matchlist.append(word)
+                                continue
+
+                        if not matchlist:
+                            newfrag1 = str(newfrag1).replace(ext,"")
+
+                        print(matchlist)
+                        
+                        for wrd in matchlist:
+
+                            ext=wrd+" "
+                            newfrag2 += ext
+                            print(newfrag2)
+
+                            result = keyfrag(enmsg2, newfrag2)
+                            fragment = decrypt(enmsg1, result)
+                            print(fragment)
+                            
+                            #fragcut
+                            index = fragment.rfind(" ")
+                            if index != -1:
+                                frag = fragment[index + 1:]
+                            else:
+                                frag = fragment
+                            #fragtowords
+                            matchlist = []
+                            for word in wordlist:
+                                if word.startswith(frag):
+                                    matchlist.append(word)
+                                    continue
+
+                            if not matchlist:
+                                newfrag2 = str(newfrag2).replace(ext,"")
+
+                            print(matchlist)
+                            
+                            for wrd in matchlist:
+
+                                ext=wrd+" "
+                                newfrag1 += ext
+                                print(newfrag1)
+
+                                result = keyfrag(enmsg1, newfrag1)
+                                fragment = decrypt(enmsg2, result)
+                                print(fragment)
+                                
+                                #fragcut
+                                index = fragment.rfind(" ")
+                                if index != -1:
+                                    frag = fragment[index + 1:]
+                                else:
+                                    frag = fragment
+                                #fragtowords
+                                matchlist = []
+                                for word in wordlist:
+                                    if word.startswith(frag):
+                                        matchlist.append(word)
+                                        continue
+
+                                if not matchlist:
+                                    newfrag1 = str(newfrag1).replace(ext,"")
+
+                                print(matchlist)
+
+    return keylist
