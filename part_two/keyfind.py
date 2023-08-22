@@ -67,22 +67,22 @@ def keyfind(enmsg1, enmsg2, list):
 
         result = keyfrag(enmsg1, wrd1)
         fragment = decrypt(enmsg2, result)
-        print("1",fragment)
+        print(fragment)
 
         matchlist = []
         for word in wordlist:
             if word.startswith(fragment):
                 matchlist.append(word)
 
-        print("2",matchlist)
+        print(matchlist)
 
         for wrd2 in matchlist:
 
             #fragfind
             result = keyfrag(enmsg2, wrd2)
-            print("3",result)
+            print(result)
             fragment = decrypt(enmsg1, result)
-            print("4",fragment)
+            print(fragment)
 
             #fragcut
             index = fragment.rfind(" ")
@@ -98,17 +98,17 @@ def keyfind(enmsg1, enmsg2, list):
                     matchlist.append(word)
                     continue
 
-            print("5",matchlist)
+            print(matchlist)
 
             for wrd in matchlist:
                 
                 ext=wrd+" "
                 newfrag1 = wrd1+" "+ext
-                print("6",newfrag1)
+                print(newfrag1)
 
                 result = keyfrag(enmsg1, newfrag1)
                 fragment = decrypt(enmsg2, result)
-                print("7",fragment)
+                print(fragment)
                 
                 #fragcut
                 index = fragment.rfind(" ")
@@ -126,17 +126,17 @@ def keyfind(enmsg1, enmsg2, list):
                 if not matchlist:
                     newfrag1 = str(newfrag1).replace(ext,"")
 
-                print("8",matchlist)
+                print(matchlist)
 
                 for wrd in matchlist:
 
                     ext=wrd+" "
                     newfrag2 = wrd2+" "+ext
-                    print("9",newfrag2)
+                    print(newfrag2)
 
                     result = keyfrag(enmsg2, newfrag2)
                     fragment = decrypt(enmsg1, result)
-                    print("10",fragment)
+                    print(fragment)
                     
                     #fragcut
                     index = fragment.rfind(" ")
@@ -154,17 +154,17 @@ def keyfind(enmsg1, enmsg2, list):
                     if not matchlist:
                         newfrag2 = str(newfrag2).replace(ext,"")
 
-                    print("11",matchlist)
+                    print(matchlist)
                     
                     for wrd in matchlist:
 
                         ext=wrd+" "
                         newfrag1 += ext
-                        print("12",newfrag1)
+                        print(newfrag1)
 
                         result = keyfrag(enmsg1, newfrag1)
                         fragment = decrypt(enmsg2, result)
-                        print("13",fragment)
+                        print(fragment)
                         
                         #fragcut
                         index = fragment.rfind(" ")
@@ -182,17 +182,17 @@ def keyfind(enmsg1, enmsg2, list):
                         if not matchlist:
                             newfrag1 = str(newfrag1).replace(ext,"")
 
-                        print("14",matchlist)
+                        print(matchlist)
                         
                         for wrd in matchlist:
 
                             ext=wrd+" "
                             newfrag2 += ext
-                            print("15",newfrag2)
+                            print(newfrag2)
 
                             result = keyfrag(enmsg2, newfrag2)
                             fragment = decrypt(enmsg1, result)
-                            print("16",fragment)
+                            print(fragment)
                             
                             #fragcut
                             index = fragment.rfind(" ")
@@ -210,17 +210,17 @@ def keyfind(enmsg1, enmsg2, list):
                             if not matchlist:
                                 newfrag2 = str(newfrag2).replace(ext,"")
 
-                            print("17",matchlist)
+                            print(matchlist)
                             
                             for wrd in matchlist:
 
                                 ext=wrd+" "
                                 newfrag1 += ext
-                                print("18",newfrag1)
+                                print(newfrag1)
 
                                 result = keyfrag(enmsg1, newfrag1)
                                 fragment = decrypt(enmsg2, result)
-                                print("19",fragment)
+                                print(fragment)
                                 
                                 #fragcut
                                 index = fragment.rfind(" ")
@@ -238,7 +238,7 @@ def keyfind(enmsg1, enmsg2, list):
                                 if not matchlist:
                                     newfrag1 = str(newfrag1).replace(ext,"")
 
-                                print("20",matchlist)
+                                print(matchlist)
 
     return keylist
 

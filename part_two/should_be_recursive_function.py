@@ -1,11 +1,11 @@
 for wrd in matchlist:
 
     ext=wrd+" "
-    newfrag2 += ext
-    print(newfrag2)
+    newfrag1 += ext
+    print(newfrag1)
 
-    result = keyfrag(enmsg2, newfrag2)
-    fragment = decrypt(enmsg1, result)
+    result = keyfrag(enmsg1, newfrag1)
+    fragment = decrypt(enmsg2, result)
     print(fragment)
     
     #fragcut
@@ -21,21 +21,21 @@ for wrd in matchlist:
             matchlist.append(word)
             continue
 
-        if not matchlist:
-            newfrag2 = str(newfrag2).replace(ext,"")
+    if not matchlist:
+        newfrag1 = str(newfrag1).replace(ext,"")
 
     print(matchlist)
-    
+
     for wrd in matchlist:
 
         ext=wrd+" "
-        newfrag1 += ext
-        print(newfrag1)
+        newfrag2 += ext
+        print(newfrag2)
 
-        result = keyfrag(enmsg1, newfrag1)
-        fragment = decrypt(enmsg2, result)
+        result = keyfrag(enmsg2, newfrag2)
+        fragment = decrypt(enmsg1, result)
         print(fragment)
-        
+
         #fragcut
         index = fragment.rfind(" ")
         if index != -1:
@@ -50,6 +50,6 @@ for wrd in matchlist:
                 continue
 
         if not matchlist:
-            newfrag1 = str(newfrag1).replace(ext,"")
+            newfrag2 = str(newfrag2).replace(ext,"")
 
         print(matchlist)
