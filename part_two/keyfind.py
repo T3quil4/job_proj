@@ -56,44 +56,70 @@ def keyfrag(msg, frag):
 
     return result
 
-def keyfind(enmsg1, enmsg2, start):
+def keyfind(enmsg1, enmsg2, list):
     keylist=[]
     wordlist = wrdlist('part_two\words.txt')
 
-    result = keyfrag(enmsg1, start)
-    fragment = decrypt(enmsg2, result)
-    print(fragment)
 
-    matchlist = []
-    for word in wordlist:
-        if fragment in word:
-            matchlist.append(word)
-    print(matchlist)
+    for wrd1 in list:
 
+        result = keyfrag(enmsg1, wrd1)
+        fragment = decrypt(enmsg2, result)
+        print(fragment)
 
-    for wrd1 in matchlist:
-
-        #fragfind
-        result2 = keyfrag(enmsg2, wrd1)
-        print(result2)
-        fragment2 = decrypt(enmsg1, result2)
-        print(fragment2)
-
-        #fragcut
-        index = fragment2.rfind(" ")
-        if index != -1:
-            frag = fragment2[index + 1:]
-        else:
-            frag = fragment2
-
-        #fragtowords
         matchlist = []
         for word in wordlist:
-            if frag in word:
+            if word.startswith(fragment):
                 matchlist.append(word)
-                continue
-
         print(matchlist)
+
+        for wrd2 in matchlist:
+
+            #fragfind
+            result2 = keyfrag(enmsg2, wrd2)
+            print(result2)
+            fragment2 = decrypt(enmsg1, result2)
+            print(fragment2)
+
+            #fragcut
+            index = fragment2.rfind(" ")
+            if index != -1:
+                frag = fragment2[index + 1:]
+            else:
+                frag = fragment2
+
+            #fragtowords
+            matchlist = []
+            for word in wordlist:
+                if word.startswith(frag):
+                    matchlist.append(word)
+                    continue
+
+            print(matchlist)
+
+            for wrd3 in matchlist:
+
+                newfrag = wrd1+" "+wrd3+" "
+                print(newfrag)
+
+                result3 = keyfrag(enmsg1, newfrag)
+                fragment3 = decrypt(enmsg2, result3)
+                print(fragment3)
+                
+                #fragcut
+                index = fragment3.rfind(" ")
+                if index != -1:
+                    frag = fragment3[index + 1:]
+                else:
+                    frag = fragment3
+                #fragtowords
+                matchlist = []
+                for word in wordlist:
+                    if word.startswith(frag):
+                        matchlist.append(word)
+                        continue
+                    
+                print(matchlist)
 
     return keylist
 
@@ -101,9 +127,9 @@ def keyfind(enmsg1, enmsg2, start):
 
 emsg2 = "cvtlsxoagjvimnhhezpnjnau"
 emsg1 = "ebtobehq nkcbvfljyhbrp xquq"
-word1 = "early"
+list = ["early"]
 
-keys = keyfind(emsg1, emsg2, word1)
+keys = keyfind(emsg1, emsg2, list)
 
 for key in keys:
     print(key)
