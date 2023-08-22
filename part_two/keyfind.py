@@ -69,13 +69,12 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
         fragment = decrypt(enmsg2, result)
         print(fragment)
         
-        #fragcut
         index = fragment.rfind(" ")
         if index != -1:
             frag = fragment[index + 1:]
         else:
             frag = fragment
-        #fragtowords
+
         matchlist = []
         for word in wordlist:
             if word.startswith(frag):
@@ -95,13 +94,12 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
             fragment = decrypt(enmsg1, result)
             print(fragment)
 
-            #fragcut
             index = fragment.rfind(" ")
             if index != -1:
                 frag = fragment[index + 1:]
             else:
                 frag = fragment
-            #fragtowords
+
             matchlist = []
             for word in wordlist:
                 if word.startswith(frag):
