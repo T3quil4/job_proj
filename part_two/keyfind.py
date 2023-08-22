@@ -11,7 +11,7 @@ def decrypt(enmsg, key):
 
     for i, char in enumerate(enmsg):
 
-        if i<keylen:
+        if i < keylen:
             if char == " ":
                 ecode = 26
             else:
@@ -33,7 +33,7 @@ def decrypt(enmsg, key):
 
     return msg
 
-def keyre(msg, frag):
+def keyfrag(msg, frag):
     result = ""
 
     for i, char in enumerate(frag):
@@ -59,27 +59,46 @@ def keyre(msg, frag):
 def keyfind(enmsg1, enmsg2, start):
     keylist=[]
     wordlist = wrdlist('part_two\words.txt')
-    begin = start
 
-    result = keyre(enmsg1, begin)
-
+    result = keyfrag(enmsg1, start)
     fragment = decrypt(enmsg2, result)
-
     print(fragment)
 
     matchlist = []
     for word in wordlist:
         if fragment in word:
             matchlist.append(word)
-
     print(matchlist)
 
 
-        
+    for wrd1 in matchlist:
 
+        #fragfind
+        result2 = keyfrag(enmsg2, wrd1)
+        print(result2)
+        fragment2 = decrypt(enmsg1, result2)
+        print(fragment2)
+
+        #fragcut
+        index = fragment2.rfind(" ")
+        if index != -1:
+            frag = fragment2[index + 1:]
+        else:
+            frag = fragment2
+
+        #fragtowords
+        matchlist = []
+        for word in wordlist:
+            if frag in word:
+                matchlist.append(word)
+                continue
+
+        print(matchlist)
 
     return keylist
-        #early
+
+
+
 emsg2 = "cvtlsxoagjvimnhhezpnjnau"
 emsg1 = "ebtobehq nkcbvfljyhbrp xquq"
 word1 = "early"
