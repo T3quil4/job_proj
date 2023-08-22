@@ -58,6 +58,7 @@ def keyfrag(msg, frag):
 
 def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
+    keylist=[]
     flag=False
 
     for wrd in matchlist:
@@ -67,6 +68,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
         result = keyfrag(enmsg1, newfrag1)
         fragment = decrypt(enmsg2, result)
+        print(result)
         print(fragment)
         
         index = fragment.rfind(" ")
@@ -80,7 +82,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
             if word.startswith(frag):
                 matchlist.append(word)
                 continue
-
+            
         if not matchlist:
             newfrag1 = str(newfrag1).replace(ext,"")
 
@@ -92,6 +94,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
             result = keyfrag(enmsg2, newfrag2)
             fragment = decrypt(enmsg1, result)
+            print(result)
             print(fragment)
 
             index = fragment.rfind(" ")
@@ -109,9 +112,10 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
             if not matchlist:
                 newfrag2 = str(newfrag2).replace(ext,"")
 
-
             if len(enmsg2)!=len(newfrag2):
                 solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
+            else:
+                keylist.append(result)
 
 
 

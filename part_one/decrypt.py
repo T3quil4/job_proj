@@ -28,7 +28,7 @@ def decrypt(enmsg, key):
     return msg
 
 
-enmsg = "ebtobehq "
-key = "abcdefgij"
+enmsg = "cvtlsxoagjvimnhhezpnjnau"
+key = "abcdefgijklabcdefgijklatqsj"
 
 print(decrypt(enmsg, key))
