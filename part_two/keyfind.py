@@ -56,16 +56,14 @@ def keyfrag(msg, frag):
 
     return result
 
-def solver(enmsg1, enmsg2, matchlist, wordlist):
+def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
-    newfrag1=""
-    newfrag2=""
+    flag=False
 
     for wrd in matchlist:
 
         ext=wrd+" "
         newfrag1 += ext
-        print(newfrag1)
 
         result = keyfrag(enmsg1, newfrag1)
         fragment = decrypt(enmsg2, result)
@@ -87,13 +85,11 @@ def solver(enmsg1, enmsg2, matchlist, wordlist):
         if not matchlist:
             newfrag1 = str(newfrag1).replace(ext,"")
 
-        print(matchlist)
 
         for wrd in matchlist:
 
             ext=wrd+" "
             newfrag2 += ext
-            print(newfrag2)
 
             result = keyfrag(enmsg2, newfrag2)
             fragment = decrypt(enmsg1, result)
@@ -115,22 +111,18 @@ def solver(enmsg1, enmsg2, matchlist, wordlist):
             if not matchlist:
                 newfrag2 = str(newfrag2).replace(ext,"")
 
-            print(matchlist)
 
-
-
-            
-            
-
-
+            if len(enmsg2)!=len(newfrag2):
+                solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
 
 
 
 wordlist = wrdlist('part_two\words.txt')
-
 emsg2 = "cvtlsxoagjvimnhhezpnjnau"
 emsg1 = "ebtobehq nkcbvfljyhbrp xquq"
 list = ["early"]
+newfrag1=""
+newfrag2=""
 
 
-keys = solver(emsg1, emsg2, list, wordlist)
+keys = solver(emsg1, emsg2, list, wordlist, newfrag1, newfrag2)
