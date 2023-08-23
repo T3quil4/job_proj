@@ -1,25 +1,10 @@
 #KEYFIND
 
-import re
 
 def wrdlist(path):
     with open(path, 'r') as file:
         wlist = [line.strip() for line in file]
     return wlist
-
-def isPattern(s):
-    pattern = ""
-    length = len(s)
-
-    for i in range(1, length):
-        if length % i == 0:
-            substr = s[:i]
-            repeated = substr * (length // i)
-            if repeated == s:
-                pattern = substr
-                break
-    
-    return pattern
 
 def decrypt(enmsg, key):
     msg = ""
@@ -130,8 +115,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
 
             if len(result)>=len(fragment):
-                pattern=isPattern(result)
-                keylist.append(pattern)
+                keylist.append(result)
             else:
                 solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
 
