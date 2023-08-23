@@ -1,9 +1,25 @@
 #KEYFIND
 
+import re
+
 def wrdlist(path):
     with open(path, 'r') as file:
         wlist = [line.strip() for line in file]
     return wlist
+
+def isPattern(s):
+    pattern = ""
+    length = len(s)
+
+    for i in range(1, length):
+        if length % i == 0:
+            substr = s[:i]
+            repeated = substr * (length // i)
+            if repeated == s:
+                pattern = substr
+                break
+    
+    return pattern
 
 def decrypt(enmsg, key):
     msg = ""
@@ -68,8 +84,8 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
         result = keyfrag(enmsg1, newfrag1)
         fragment = decrypt(enmsg2, result)
-        print(result)
-        print(fragment)
+        print("Key-1: ",result)
+        print("Res-1: ",fragment)
         
         index = fragment.rfind(" ")
         if index != -1:
@@ -82,7 +98,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
             if word.startswith(frag):
                 matchlist.append(word)
                 continue
-            
+
         if not matchlist:
             newfrag1 = str(newfrag1).replace(ext,"")
 
@@ -94,8 +110,8 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
 
             result = keyfrag(enmsg2, newfrag2)
             fragment = decrypt(enmsg1, result)
-            print(result)
-            print(fragment)
+            print("Key-2: ",result)
+            print("Res-2: ",fragment)
 
             index = fragment.rfind(" ")
             if index != -1:
@@ -112,10 +128,14 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
             if not matchlist:
                 newfrag2 = str(newfrag2).replace(ext,"")
 
-            if len(enmsg2)!=len(newfrag2):
-                solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
+
+            if len(result)>=len(fragment):
+                pattern=isPattern(result)
+                keylist.append(pattern)
             else:
-                keylist.append(result)
+                solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
+
+    return keylist
 
 
 
@@ -128,3 +148,5 @@ newfrag2=""
 
 
 keys = solver(emsg1, emsg2, list, wordlist, newfrag1, newfrag2)
+for key in keys:
+    print(key)
