@@ -29,6 +29,6 @@ def decrypt(enmsg, key):
 
 
 enmsg = "cvtlsxoagjvimnhhezpnjnau"
-key = "abcdefgijklabcdefgijklatqsj"
+key = "abcdefgijklabcdefgijkla"
 
 print(decrypt(enmsg, key))

@@ -67,42 +67,20 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
         ext=wrd+" "
         newfrag1 += ext
 
-        result = keyfrag(enmsg1, newfrag1)
-        fragment = decrypt(enmsg2, result)
-        print("Key-1: ",result)
-        print("Res-1: ",fragment)
-        
-        index = fragment.rfind(" ")
-        if index != -1:
-            frag = fragment[index + 1:]
-        else:
-            frag = fragment
+        if len(newfrag1)<=len(enmsg1):
 
-        matchlist = []
-        for word in wordlist:
-            if word.startswith(frag):
-                matchlist.append(word)
-                continue
-
-        if not matchlist:
-            newfrag1 = str(newfrag1).replace(ext,"")
-
-
-        for wrd in matchlist:
-
-            ext=wrd+" "
-            newfrag2 += ext
-
-            result = keyfrag(enmsg2, newfrag2)
-            fragment = decrypt(enmsg1, result)
-            print("Key-2: ",result)
-            print("Res-2: ",fragment)
-
+            result = keyfrag(enmsg1, newfrag1)
+            fragment = decrypt(enmsg2, result)
+            print("Key-1: ",result)
+            print("Res-1: ",fragment)
+            
             index = fragment.rfind(" ")
             if index != -1:
                 frag = fragment[index + 1:]
             else:
                 frag = fragment
+
+            print("Frag-1: ",frag)
 
             matchlist = []
             for word in wordlist:
@@ -111,13 +89,43 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
                     continue
 
             if not matchlist:
-                newfrag2 = str(newfrag2).replace(ext,"")
+                newfrag1 = str(newfrag1).replace(ext,"")
 
 
-            if len(result)>=len(fragment):
-                keylist.append(result)
-            else:
-                solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
+            for wrd in matchlist:
+
+                ext=wrd+" "
+                newfrag2 += ext
+
+                if len(newfrag2)<=len(enmsg2):
+
+                    result = keyfrag(enmsg2, newfrag2)
+                    fragment = decrypt(enmsg1, result)
+                    print("Key-2: ",result)
+                    print("Res-2: ",fragment)
+
+                    index = fragment.rfind(" ")
+                    if index != -1:
+                        frag = fragment[index + 1:]
+                    else:
+                        frag = fragment
+
+                    print("Frag-2: ",frag)
+
+                    matchlist = []
+                    for word in wordlist:
+                        if word.startswith(frag):
+                            matchlist.append(word)
+                            continue
+
+                    if not matchlist:
+                        newfrag2 = str(newfrag2).replace(ext,"")
+
+
+                    if len(fragment)>=len(enmsg1):
+                        keylist.append(result)
+                    else:
+                        solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
 
     return keylist
 
