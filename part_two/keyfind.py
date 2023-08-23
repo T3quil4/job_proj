@@ -57,7 +57,7 @@ def keyfrag(msg, frag):
 
     return result
 
-def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
+def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
 
     keylist=[]
     flag=False
@@ -65,9 +65,12 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
     for wrd in matchlist:
 
         ext=wrd+" "
-        newfrag1 += ext
-
-        if len(newfrag1)<=len(enmsg1):
+        print("\next-1: ",ext)
+        if ext==ext1:
+            continue
+        else:
+            ext1=ext
+            newfrag1 += ext
 
             result = keyfrag(enmsg1, newfrag1)
             fragment = decrypt(enmsg2, result)
@@ -87,17 +90,22 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
                 if word.startswith(frag):
                     matchlist.append(word)
                     continue
+            print("List-1: ",matchlist)
 
             if not matchlist:
                 newfrag1 = str(newfrag1).replace(ext,"")
+                print("cut-1: ",newfrag1)
 
 
             for wrd in matchlist:
 
                 ext=wrd+" "
-                newfrag2 += ext
-
-                if len(newfrag2)<=len(enmsg2):
+                print("\next-2: ",ext)
+                if ext==ext2:
+                    continue
+                else:
+                    ext2=ext
+                    newfrag2 += ext
 
                     result = keyfrag(enmsg2, newfrag2)
                     fragment = decrypt(enmsg1, result)
@@ -117,15 +125,17 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2):
                         if word.startswith(frag):
                             matchlist.append(word)
                             continue
-
+                    print("List-2: ",matchlist)
+                    
                     if not matchlist:
                         newfrag2 = str(newfrag2).replace(ext,"")
+                        print("cut-2: ",newfrag2)
 
 
                     if len(fragment)>=len(enmsg1):
                         keylist.append(result)
                     else:
-                        solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2)
+                        solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2)
 
     return keylist
 
@@ -137,8 +147,10 @@ emsg1 = "ebtobehq nkcbvfljyhbrp xquq"
 list = ["early"]
 newfrag1=""
 newfrag2=""
+ext1=""
+ext2=""
 
 
-keys = solver(emsg1, emsg2, list, wordlist, newfrag1, newfrag2)
+keys = solver(emsg1, emsg2, list, wordlist, newfrag1, newfrag2, ext1, ext2)
 for key in keys:
     print(key)
