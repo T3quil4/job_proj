@@ -71,76 +71,89 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
             ext1.append(wrd)
             newfrag1 += ext
 
-            result = keyfrag(enmsg1, newfrag1)
-            fragment = decrypt(enmsg2, result)
-            print("\nKey-1: ",result)
-            print("Res-1: ",fragment)
-            
-            index = fragment.rfind(" ")
-            if index != -1:
-                frag = fragment[index + 1:]
+            if len(newfrag1)>len(enmsg1):
+                newfrag1=str(newfrag1).rstrip(" ")
+                if len(newfrag1)>len(enmsg1):
+                    newfrag1 = str(newfrag1).replace(wrd,"")
             else:
-                frag = fragment
 
-            print("Frag-1: ",frag)
-
-            matchlist = []
-            for word in wordlist:
-                if word.startswith(frag):
-                    matchlist.append(word)
-                    continue
-            print("List-1: ",matchlist)
-
-            if not matchlist:
-                newfrag1 = str(newfrag1).replace(ext,"")
-                print("cut-1: ",newfrag1)
-
-
-            for wrd in matchlist:
-
-                ext=wrd+" "
-                #print("\next-2: ",ext)
-                if wrd in ext2:
-                    continue
+                result = keyfrag(enmsg1, newfrag1)
+                fragment = decrypt(enmsg2, result)
+                print("\nKey-1: ",result)
+                print("Res-1: ",fragment)
+                
+                index = fragment.rfind(" ")
+                if index != -1:
+                    frag = fragment[index + 1:]
                 else:
-                    ext2.append(wrd)
-                    newfrag2 += ext
+                    frag = fragment
 
-                    result = keyfrag(enmsg2, newfrag2)
-                    fragment = decrypt(enmsg1, result)
-                    print("\nKey-2: ",result)
-                    print("Res-2: ",fragment)
+                print("Frag-1: ",frag)
 
-                    index = fragment.rfind(" ")
-                    if index != -1:
-                        frag = fragment[index + 1:]
+                matchlist = []
+                for word in wordlist:
+                    if word.startswith(frag):
+                        matchlist.append(word)
+                        continue
+                print("List-1: ",matchlist)
+
+                if not matchlist:
+                    newfrag1 = str(newfrag1).replace(ext,"")
+                    print("cut-1: ",newfrag1)
+
+
+                for wrd in matchlist:
+
+                    ext=wrd+" "
+                    #print("\next-2: ",ext)
+                    if wrd in ext2:
+                        continue
                     else:
-                        frag = fragment
+                        ext2.append(wrd)
+                        newfrag2 += ext
 
-                    print("Frag-2: ",frag)
+                        if len(newfrag2)>len(enmsg2):
+                            newfrag2=str(newfrag2).rstrip(" ")
+                            if len(newfrag2)>len(enmsg2):
+                                newfrag2 = str(newfrag2).replace(wrd,"")
+                        else:
 
-                    matchlist = []
-                    for word in wordlist:
-                        if word.startswith(frag):
-                            matchlist.append(word)
-                            continue
-                    print("List-2: ",matchlist)
-                    
-                    if not matchlist:
-                        newfrag2 = str(newfrag2).replace(ext,"")
-                        print("cut-2: ",newfrag2)
+                            result = keyfrag(enmsg2, newfrag2)
+                            fragment = decrypt(enmsg1, result)
+                            print("\nKey-2: ",result)
+                            print("Res-2: ",fragment)
+
+                            index = fragment.rfind(" ")
+                            if index != -1:
+                                frag = fragment[index + 1:]
+                            else:
+                                frag = fragment
+
+                            print("Frag-2: ",frag)
+
+                            matchlist = []
+                            for word in wordlist:
+                                if word.startswith(frag):
+                                    matchlist.append(word)
+                                    continue
+                            print("List-2: ",matchlist)
+                            
+                            if not matchlist:
+                                newfrag2 = str(newfrag2).replace(ext,"")
+                                print("cut-2: ",newfrag2)
 
 
-                    if fragment.split() in wordlist:
-                        keylist.append(result)
-                        
-                    solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2)
+                            wrds = fragment.split()
+                            if all(rd in wordlist for rd in wrds):
+                                keylist.append(result)
+
+                            solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2)
 
     return keylist
 
 
 
-wordlist = wrdlist('part_two\words.txt')
+wordlist = wrdlist('part_two\words.txt') 
 emsg2 = "cvtlsxoagjvimnhhezpnjnau"
 emsg1 = "ebtobehq nkcbvfljyhbrp xquq"
 list = ["early"]
