@@ -60,16 +60,15 @@ def keyfrag(msg, frag):
 def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
 
     keylist=[]
-    flag=False
 
     for wrd in matchlist:
 
         ext=wrd+" "
         print("\next-1: ",ext)
-        if ext==ext1:
+        if wrd in ext1:
             continue
         else:
-            ext1=ext
+            ext1.append(wrd)
             newfrag1 += ext
 
             result = keyfrag(enmsg1, newfrag1)
@@ -101,10 +100,10 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
 
                 ext=wrd+" "
                 print("\next-2: ",ext)
-                if ext==ext2:
+                if wrd in ext2:
                     continue
                 else:
-                    ext2=ext
+                    ext2.append(wrd)
                     newfrag2 += ext
 
                     result = keyfrag(enmsg2, newfrag2)
@@ -132,7 +131,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                         print("cut-2: ",newfrag2)
 
 
-                    if len(fragment)>=len(enmsg1):
+                    if len(fragment)==len(enmsg1):
                         keylist.append(result)
                     else:
                         solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2)
@@ -147,8 +146,8 @@ emsg1 = "ebtobehq nkcbvfljyhbrp xquq"
 list = ["early"]
 newfrag1=""
 newfrag2=""
-ext1=""
-ext2=""
+ext1=[]
+ext2=[]
 
 
 keys = solver(emsg1, emsg2, list, wordlist, newfrag1, newfrag2, ext1, ext2)
