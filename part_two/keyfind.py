@@ -64,7 +64,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
     for wrd in matchlist:
 
         ext=wrd+" "
-        print("\next-1: ",ext)
+        #print("\next-1: ",ext)
         if wrd in ext1:
             continue
         else:
@@ -73,7 +73,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
 
             result = keyfrag(enmsg1, newfrag1)
             fragment = decrypt(enmsg2, result)
-            print("Key-1: ",result)
+            print("\nKey-1: ",result)
             print("Res-1: ",fragment)
             
             index = fragment.rfind(" ")
@@ -99,7 +99,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
             for wrd in matchlist:
 
                 ext=wrd+" "
-                print("\next-2: ",ext)
+                #print("\next-2: ",ext)
                 if wrd in ext2:
                     continue
                 else:
@@ -108,7 +108,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
 
                     result = keyfrag(enmsg2, newfrag2)
                     fragment = decrypt(enmsg1, result)
-                    print("Key-2: ",result)
+                    print("\nKey-2: ",result)
                     print("Res-2: ",fragment)
 
                     index = fragment.rfind(" ")
@@ -131,10 +131,10 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                         print("cut-2: ",newfrag2)
 
 
-                    if len(fragment)==len(enmsg1):
+                    if fragment.split() in wordlist:
                         keylist.append(result)
-                    else:
-                        solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2)
+                        
+                    solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2)
 
     return keylist
 
