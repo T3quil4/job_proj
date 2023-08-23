@@ -101,6 +101,10 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                     newfrag1 = str(newfrag1).replace(ext,"")
                     print("cut-1: ",newfrag1)
 
+                wrds = fragment.split()
+                if all(rd in wordlist for rd in wrds):
+                    keylist.append(result)
+
 
                 for wrd in matchlist:
 
