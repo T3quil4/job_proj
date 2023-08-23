@@ -74,13 +74,14 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
             if len(newfrag1)>len(enmsg1):
                 newfrag1=str(newfrag1).rstrip(" ")
                 if len(newfrag1)>len(enmsg1):
-                    newfrag1 = str(newfrag1).replace(wrd,"")
+                    newfrag1.replace(wrd,"")
             else:
 
                 result = keyfrag(enmsg1, newfrag1)
                 fragment = decrypt(enmsg2, result)
                 print("\nKey-1: ",result)
                 print("Res-1: ",fragment)
+                print("Wrd-1: ",wrd)
                 
                 index = fragment.rfind(" ")
                 if index != -1:
@@ -119,13 +120,14 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                         if len(newfrag2)>len(enmsg2):
                             newfrag2=str(newfrag2).rstrip(" ")
                             if len(newfrag2)>len(enmsg2):
-                                newfrag2 = str(newfrag2).replace(wrd,"")
+                                newfrag2.replace(wrd,"")
                         else:
 
                             result = keyfrag(enmsg2, newfrag2)
                             fragment = decrypt(enmsg1, result)
                             print("\nKey-2: ",result)
                             print("Res-2: ",fragment)
+                            print("Wrd-2: ",wrd)
 
                             index = fragment.rfind(" ")
                             if index != -1:
@@ -169,4 +171,4 @@ ext2=[]
 
 keys = solver(emsg1, emsg2, list, wordlist, newfrag1, newfrag2, ext1, ext2)
 for key in keys:
-    print(key)
+    print("\nLehetseges kulcs: ",key)
