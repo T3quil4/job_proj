@@ -64,7 +64,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
     for wrd in matchlist:
 
         ext=wrd+" "
-        #print("\next-1: ",ext)
+        print("\next-1: ",ext)
         if wrd in ext1:
             continue
         else:
@@ -82,9 +82,9 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                 if len(result)>len(enmsg2):
                     result[:len(enmsg2)]
                 fragment = decrypt(enmsg2, result)
-                #print("\nKey-1: ",result)
-                #print("Res-1: ",fragment)
-                #print("Wrd-1: ",wrd)
+                print("\nKey-1: ",result)
+                print("Res-1: ",fragment)
+                print("Wrd-1: ",wrd)
                 
                 index = fragment.rfind(" ")
                 if index != -1:
@@ -92,18 +92,18 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                 else:
                     frag = fragment
 
-                #print("Frag-1: ",frag)
+                print("Frag-1: ",frag)
 
                 matchlist = []
                 for word in wordlist:
                     if word.startswith(frag):
                         matchlist.append(word)
                         continue
-                #print("List-1: ",matchlist)
+                print("List-1: ",matchlist)
 
                 if not matchlist:
                     newfrag1 = str(newfrag1).replace(ext,"")
-                    #print("cut-1: ",newfrag1)
+                    print("cut-1: ",newfrag1)
 
                 wrds = fragment.split()
                 if all(rd in wordlist for rd in wrds):
@@ -113,7 +113,7 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                 for wrd in matchlist:
 
                     ext=wrd+" "
-                    #print("\next-2: ",ext)
+                    print("\next-2: ",ext)
                     if wrd in ext2:
                         continue
                     else:
@@ -130,9 +130,9 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                             if len(result)>len(enmsg1):
                                 result[:len(enmsg1)]
                             fragment = decrypt(enmsg1, result)
-                            #print("\nKey-2: ",result)
-                            #print("Res-2: ",fragment)
-                            #print("Wrd-2: ",wrd)
+                            print("\nKey-2: ",result)
+                            print("Res-2: ",fragment)
+                            print("Wrd-2: ",wrd)
 
                             index = fragment.rfind(" ")
                             if index != -1:
@@ -140,18 +140,18 @@ def solver(enmsg1, enmsg2, matchlist, wordlist, newfrag1, newfrag2, ext1, ext2):
                             else:
                                 frag = fragment
 
-                            #print("Frag-2: ",frag)
+                            print("Frag-2: ",frag)
 
                             matchlist = []
                             for word in wordlist:
                                 if word.startswith(frag):
                                     matchlist.append(word)
                                     continue
-                            #print("List-2: ",matchlist)
+                            print("List-2: ",matchlist)
                             
                             if not matchlist:
                                 newfrag2 = str(newfrag2).replace(ext,"")
-                                #print("cut-2: ",newfrag2)
+                                print("cut-2: ",newfrag2)
 
 
                             wrds = fragment.split()
